@@ -3,7 +3,8 @@ package ru.edu.pr05;
 import java.time.LocalDate;
 
 public class BusinessTrip {
-    public static final int MIN_REASON_LENGTH = 10;
+    // вариант 4: причина отклонения не короче 25 символов (было 10)
+    public static final int MIN_REASON_LENGTH = 25;
 
     private final String id;
     private final LocalDate start;

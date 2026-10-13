@@ -19,6 +19,7 @@ public class SelfCheck {
         checkReject();
         checkCancelComplete();
         checkService();
+        checkVariant();
         System.out.println("Unit: " + passed + "/" + count + " passed");
         // свой файл: java -cp out ru.edu.pr05.SelfCheck data/my.csv
         runFile(args.length > 0 ? args[0] : "data/sample.csv");
@@ -90,6 +91,16 @@ public class SelfCheck {
         b.submit();
         check("findByStatus", service.findByStatus(TripStatus.DRAFT).size() == 1 && service.findByStatus(TripStatus.SUBMITTED).size() == 1);
         check("duplicate id", !tryServiceCreate(service, "A"));
+    }
+
+    private static void checkVariant() {
+        // вариант 4: 24 символа мало, 25 достаточно
+        check("variant 24 chars", !tryAction(submittedTrip(), "REJECT:" + "а".repeat(24)));
+        check("variant 25 chars", tryAction(submittedTrip(), "REJECT:" + "а".repeat(25)));
+        // причина на 20 символов раньше подходила, теперь нет
+        check("variant old reason", !tryAction(submittedTrip(), "REJECT:Нет денег на поездку"));
+        // пробелы по краям не считаются
+        check("variant spaces", !tryAction(submittedTrip(), "REJECT:   " + "а".repeat(24) + "   "));
     }
 
     // ---------- вспомогательные методы ----------
