@@ -1,10 +1,12 @@
 digraph C {
-graph [rankdir=TB, bgcolor="white", pad=0.2, nodesep=0.35, ranksep=0.4];
+graph [rankdir=TB, bgcolor="white", pad=0.2, nodesep=0.35, ranksep=0.5];
 node [shape=record, style="filled", fontname="Times New Roman", fontsize=10, color="#2F5597", fillcolor="#F7FBFF"];
 edge [fontname="Times New Roman", fontsize=9, color="#555555"];
-t [label="{BusinessTrip\nTODO|- id String\l- employee Employee\l- start LocalDate\l- end LocalDate\l- status TripStatus\l- rejectionReason String\l|+ submit()\l+ approve()\l+ reject(String)\l+ cancel()\l+ complete(LocalDate)\l}", fillcolor="#FDE9E7", color="#C00000"];
-st [label="{TripStatus||DRAFT\lSUBMITTED\lAPPROVED\lREJECTED\lCANCELLED\lCOMPLETED\l}", fillcolor="#F7FBFF", color="#2F5597"];
-sv [label="{BusinessTripService\nTODO||+ create(...) BusinessTrip\l+ findByStatus(TripStatus) List\l}", fillcolor="#FDE9E7", color="#C00000"];
-t -> st [label="1",style=dashed,arrowhead=open];
+sv [label="{BusinessTripService|- trips List[BusinessTrip]\l|+ create(String, LocalDate, LocalDate) BusinessTrip\l+ findById(String) BusinessTrip\l+ findByStatus(TripStatus) List[BusinessTrip]\l}"];
+t [label="{BusinessTrip|+ MIN_REASON_LENGTH = 25 int\l- id String\l- start LocalDate\l- end LocalDate\l- employee Employee\l- destination String\l- status TripStatus\l- rejectionReason String\l|+ BusinessTrip(String, LocalDate, LocalDate)\l+ fillDetails(Employee, String) void\l+ submit() void\l+ approve() void\l+ reject(String) void\l+ cancel() void\l+ complete(LocalDate) void\l- checkStatus(String, TripStatus...) void\l+ getStatus() TripStatus\l+ getRejectionReason() String\l+ get...() (id, даты, сотрудник, место)\l}"];
+st [label="{«enum» TripStatus|DRAFT\lSUBMITTED\lAPPROVED\lREJECTED\lCANCELLED\lCOMPLETED\l}"];
+e [label="{«record» Employee|- id String\l- fullName String\l}"];
 sv -> t [label="manages",style=dashed,arrowhead=open];
+t -> st [label="1",style=dashed,arrowhead=open];
+t -> e [label="0..1",arrowtail=odiamond,dir=both];
 }

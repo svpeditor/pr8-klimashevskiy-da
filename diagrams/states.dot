@@ -1,0 +1,12 @@
+digraph S {
+graph [rankdir=LR, bgcolor="white", pad=0.2, nodesep=0.5, ranksep=0.8];
+node [shape=box, style="rounded,filled", fontname="Times New Roman", fontsize=11, color="#2F5597", fillcolor="#EAF2F8"];
+edge [fontname="Times New Roman", fontsize=9, color="#555555"];
+DRAFT -> SUBMITTED [label="submit()\nесть сотрудник и место"];
+SUBMITTED -> APPROVED [label="approve()"];
+SUBMITTED -> REJECTED [label="reject(reason)\nпричина >= 25 символов"];
+APPROVED -> COMPLETED [label="complete(today)\ntoday после end"];
+DRAFT -> CANCELLED [label="cancel()"];
+SUBMITTED -> CANCELLED [label="cancel()"];
+APPROVED -> CANCELLED [label="cancel()"];
+}
